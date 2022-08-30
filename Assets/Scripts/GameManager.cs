@@ -13,6 +13,16 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     public static string currentPlayer;
 
+    public static void ResetHighScores()
+    {
+        PlayerPrefs.DeleteKey("HighScoreName");
+        PlayerPrefs.DeleteKey("HighScore");
+        if (Application.isPlaying)
+        {
+            SceneManager.LoadScene(0);
+        }
+    }
+
     void Awake()
     {
         if (instance == null)
@@ -20,7 +30,6 @@ public class GameManager : MonoBehaviour
             instance = this;
             DontDestroyOnLoad(gameObject);
         }
-
     }
 
 
@@ -31,10 +40,9 @@ public class GameManager : MonoBehaviour
 
     private void SetHighScoreText()
     {
-        string player = PlayerPrefs.GetString("HighScoreName", "No one yet");
+        string player = PlayerPrefs.GetString("HighScoreName", "no one yet");
         int score = PlayerPrefs.GetInt("HighScore", 0);
         textHighScore.text = $"Highscore: {score} by {player} ";
-
     }
 
     public void OnClickStart()
@@ -63,7 +71,6 @@ public class GameManager : MonoBehaviour
     {
         string player = PlayerPrefs.GetString("HighScoreName", "no one yet");
         int score = PlayerPrefs.GetInt("HighScore", 0);
-
-        return $"Highscore: {score} by {player} "; ;
+        return $"Highscore: {score} by {player} ";
     }
 }
